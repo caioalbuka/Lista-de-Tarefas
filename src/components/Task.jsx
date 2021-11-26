@@ -1,41 +1,46 @@
-import React from 'react';
-// import { CgClose, CgInfo } from 'react-icon/cg';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { CgCloseR, CgDanger, CgPen } from 'react-icons/cg';
+import { useNavigate } from 'react-router-dom';
 
-import './task.css'
+import './Task.css';
 
-const Task = ({ task, handleTaskClick, handleTaskDeletion }) => {
-  const history = useHistory();
+import EditTask from './EditTask';
 
+const Task = ({ tarefa, handleTaskClick, handleTaskDeletion }) => {
+  const navigation = useNavigate();
+  const [visible, setVisible] = useState(false);
   const handleTaskDetailsClick = () => {
-    history.push(`/${task.title}`);
+    navigation.navigate = `/${tarefa.title}`;
   };
 
   return (
-    <div
-      className='task-container'
-      style={task.completed ? { borderLeft: '6px solid chartreuse' } : {}}
-    >
+    <div>
+      {!visible && (
+        <div
+          className="task-container"
+          style={tarefa.completed ? { borderLeft: '6px solid chartreuse' } : {}}
+        >
+          {/* colocar etiquetas dizendo Deletar/Editar/Detalhes */}
+          <div className="task-title" onClick={() => handleTaskClick(tarefa.id)}>
+            {tarefa.title}
+          </div>
+          <div className="button-container">
+            <button className="remove-task-button" onClick={() => handleTaskDeletion(tarefa.id)}>
+              <CgCloseR />
+            </button>
+            <button className="edit-task-button" onClick={() => setVisible(true)}>
+              <CgPen />
+            </button>
 
-      <div className='task-title' onClick={() => handleTaskClick(task.id)}>
-        {task.title}
-      </div>
-
-      <div className='button-container'>
-        <button className='remove-task-button'
-          onClick={() => handleTaskDeletion(task.id)}>XX
-          {/* <CgClose /> */}
-        </button>
-        <button className='see-task-details-button'
-          onClick={handleTaskDetailsClick}>
-
-          {/* <CgInfo /> */}O
-        </button>
-      </div>
+            <button className="see-task-details-button" onClick={handleTaskDetailsClick}>
+              <CgDanger />
+            </button>
+          </div>
+        </div>
+      )}
+      {visible && <EditTask pinico={tarefa} />}
     </div>
   );
 };
 
 export default Task;
-
-

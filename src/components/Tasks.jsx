@@ -1,17 +1,21 @@
 import React from 'react';
 
-import Task from "./Task";
+import Task from './Task.jsx';
 
-const Tasks = ({ tasks }) => {
+const Tasks = ({ tasks, handleTaskClick, handleTaskEdit, handleTaskDeletion, setVisible }) => {
   return (
     <>
-      {tasks.map((task) => (
-        <Task task={task} />
+      {tasks.map((item) => (
+        <Task
+          tarefa={item}
+          handleTaskClick={handleTaskClick}
+          handleTaskDeletion={handleTaskDeletion}
+          handleTaskEdit={handleTaskEdit}
+          setVisible={setVisible}
+        />
       ))}
     </>
   );
 };
 
 export default Tasks;
-
-
