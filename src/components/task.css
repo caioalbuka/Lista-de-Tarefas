@@ -36,3 +36,8 @@
   background-color: #444;
   color: chartreuse;
 }
+
+Link {
+  color: chartreuse;
+  font-size: 16px;
+}

@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { CgCloseR, CgDanger, CgPen } from 'react-icons/cg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import './Task.css';
 
 import EditTask from './EditTask';
 
-const Task = ({ tarefa, handleTaskClick, handleTaskDeletion }) => {
+const Task = ({ tarefa, handleTaskClick, handleTaskDeletion, handleTaskEdit }) => {
   const navigation = useNavigate();
   const [visible, setVisible] = useState(false);
+
   const handleTaskDetailsClick = () => {
-    navigation.navigate = `/${tarefa.title}`;
+    navigation(`../details/${tarefa.id}`);
   };
 
   return (
@@ -20,7 +21,8 @@ const Task = ({ tarefa, handleTaskClick, handleTaskDeletion }) => {
           className="task-container"
           style={tarefa.completed ? { borderLeft: '6px solid chartreuse' } : {}}
         >
-          {/* colocar etiquetas dizendo Deletar/Editar/Detalhes */}
+          {/* colocar etiquetas (ao passar o mouse em cima 
+            das imagens aparecer a legenda embaixo dizendo Deletar/Editar/Detalhes */}
           <div className="task-title" onClick={() => handleTaskClick(tarefa.id)}>
             {tarefa.title}
           </div>
@@ -32,13 +34,17 @@ const Task = ({ tarefa, handleTaskClick, handleTaskDeletion }) => {
               <CgPen />
             </button>
 
-            <button className="see-task-details-button" onClick={handleTaskDetailsClick}>
+            <button className="see-task-details-button" onClick={() => handleTaskDetailsClick()}>
               <CgDanger />
+              {/*TENTATIVA DE COLOCAR ETIQUENA NO Icone {tooltip}
+                {!visible && <figcaption>Detalhes</figcaption>} */}
             </button>
           </div>
         </div>
       )}
-      {visible && <EditTask pinico={tarefa} />}
+      {visible && (
+        <EditTask pinico={tarefa} handleTaskEdit={handleTaskEdit} setVisible={setVisible} />
+      )}
     </div>
   );
 };

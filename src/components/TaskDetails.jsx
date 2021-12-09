@@ -9,18 +9,19 @@ const TaskDetails = () => {
   const params = useParams();
   const history = useNavigate();
 
+  //invisible
   const handleBackButtonClick = () => {
     history.goBack();
   };
-  console.log(params);
+
   return (
     <>
       <div className="back-button-container">
+        {/* Deixar invisible e aparecer apenas depois de adicionar o detalhe. */}
         <Button onClick={handleBackButtonClick}>Voltar</Button>
       </div>
       <div className="task-details-container">
         <h2>{params.taskTitle}</h2>
-        <p>Teste, ainda nao sei onde isso vai aparecer escrito...</p>
       </div>
     </>
   );
