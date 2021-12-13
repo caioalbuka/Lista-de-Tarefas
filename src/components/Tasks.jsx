@@ -12,6 +12,7 @@ const Tasks = ({ tasks, handleTaskClick, handleTaskEdit, handleTaskDeletion, set
           handleTaskDeletion={handleTaskDeletion}
           handleTaskEdit={handleTaskEdit}
           setVisible={setVisible}
+          
         />
       ))}
     </>
