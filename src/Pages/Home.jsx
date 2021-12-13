@@ -11,7 +11,11 @@ import Header from '../components/Header';
 //import Routes from '../Pages/Routes';
 
 const Home = () => {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(
+    JSON.parse(localStorage.getItem('tarefas')) ? JSON.parse(localStorage.getItem('tarefas')) : [],
+  );
+  //const [] = localStorage.getItem('tarefas') ? localStorage.getItem('tarefas') : [];
+  //const [text, setText] = useState(tarefa.details ? tarefa.details : 'Escreva aqui o Detalhe');
 
   const handleTaskClick = (taskId) => {
     const newTasks = tasks.map((task) => {
@@ -31,9 +35,10 @@ const Home = () => {
         id: uuidv4(),
         title: title,
         completed: false,
+        details: '',
       },
     ];
-
+    localStorage.setItem('tarefas', JSON.stringify(newTasks));
     setTasks(newTasks);
   };
 

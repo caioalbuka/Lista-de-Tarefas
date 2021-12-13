@@ -1,73 +1,75 @@
 import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 
-import Tasks from '../../components/Tasks';
+import Button from '../../components/Button';
 import Voltar from './Voltar';
-import setVisible from '../../components/Task';
-
-import '../../App';
 import HeaderDetails from './HeaderDetails';
-import AddDetails from './AddDetails';
-//import Routes from '../Pages/Routes';
-// import Button from '../components/Button';
+import Modal from '../../components/PopUp';
+import './Details.css';
 
 const Details = () => {
-  const [tasks, setTasks] = useState([]);
+  const [showModal, setShowModal] = useState(true);
+  const openModal = () => {
+    setShowModal(true);
+  };
   const { id } = useParams();
-  //aqui em cima passa o id
-  const handleTaskAddition = (title) => {
-    if (title === '') return alert('Falta colocar uma tarefa.');
+  const {
+    state: { tarefa },
+  } = useLocation();
 
-    const newTasks = [
-      ...tasks,
-      {
-        id: uuidv4(),
-        title: title,
-        completed: false,
-      },
-    ];
+  //const[Var de estado, funçao que altera a variavel de estao] = useState-hook de estado ([])
 
-    setTasks(newTasks);
+  const [title, setTitle] = useState(tarefa.title);
+  const [text, setText] = useState(tarefa.details ? tarefa.details : 'Escreva aqui o Detalhe');
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
   };
-
-  const handleTaskDeletion = (taskId) => {
-    const newTasks = tasks.filter((task) => task.id !== taskId);
-
-    setTasks(newTasks);
+  const handleInputChange = (e) => {
+    setText(e.target.value);
   };
-
-  const handleTaskEdit = ({ title, id }) => {
-    if (title === '') return alert('Falta colocar o detalhe da tarefa.');
-
-    const newTasks = tasks.map((item) => {
-      if (item.id === id) {
-        return { ...item, title: title };
+  const handleClickSave = () => {
+    const tasks = JSON.parse(localStorage.getItem('tarefas'));
+    const newTarefa = {
+      id: id,
+      title: title,
+      details: text,
+      completed: tarefa.completed,
+    };
+    const newTasks = tasks.map((tarefa) => {
+      if (tarefa.id === id) {
+        return newTarefa;
       } else {
-        return item;
+        return tarefa;
       }
     });
-    //console.log('newTasks', newTasks);
-    setTasks(newTasks);
+    localStorage.setItem('tarefas', JSON.stringify(newTasks));
+    // return alert(PopUp());
+
+    return alert('SALVO');
+    //procurar nessa lista de array, procurar o id e substituir pelo newTarefa
   };
-  //console.log('aqui vem o valor da tasks', tasks);
   return (
     <div className="container">
       <div className="details-header">
         <HeaderDetails />
-        {/* <Voltar /> */}
-
-        <Voltar />
       </div>
-      <AddDetails handleTaskAddition={handleTaskAddition} />
-      <Tasks
-        tasks={tasks}
-        handleTaskDeletion={handleTaskDeletion}
-        handleTaskEdit={handleTaskEdit}
-        setVisible={setVisible}
-      />
+      <div className="details-info">
+        <div className="title-details-container">
+          <input value={title} onChange={handleTitleChange} />
+          <div className="edit-task-container">
+            <textarea value={text} onChange={handleInputChange} />
+            {/* onChange={() => setText(handInputChange)} /> */}
+          </div>
+          <div className="button-details-container">
+            <Voltar />
+            <Button onClick={handleClickSave}>Salvar</Button>
+            <button onClick={openModal}>Open Modal</button>
+            {/* {showModal ? <Modal setShowModal={setShowModal} /> : null} */}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
-
 export default Details;

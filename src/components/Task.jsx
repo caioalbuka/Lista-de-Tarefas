@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { CgCloseR, CgDanger, CgPen } from 'react-icons/cg';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import './Task.css';
 
 import EditTask from './EditTask';
 
-const Task = ({ tarefa, handleTaskClick, handleTaskDeletion, handleTaskEdit }) => {
+const Task = ({ tasks, tarefa, handleTaskClick, handleTaskDeletion, handleTaskEdit }) => {
   const navigation = useNavigate();
   const [visible, setVisible] = useState(false);
 
   const handleTaskDetailsClick = () => {
-    navigation(`../details/${tarefa.id}`);
+    navigation(`../details/${tarefa.id}`, { state: { tarefa } });
   };
 
   return (
@@ -34,7 +34,10 @@ const Task = ({ tarefa, handleTaskClick, handleTaskDeletion, handleTaskEdit }) =
               <CgPen />
             </button>
 
-            <button className="see-task-details-button" onClick={() => handleTaskDetailsClick()}>
+            <button
+              className="see-task-details-button"
+              onClick={() => handleTaskDetailsClick(tasks)}
+            >
               <CgDanger />
               {/*TENTATIVA DE COLOCAR ETIQUENA NO Icone {tooltip}
                 {!visible && <figcaption>Detalhes</figcaption>} */}

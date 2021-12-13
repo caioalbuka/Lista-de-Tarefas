@@ -8,6 +8,7 @@ const Tasks = ({ tasks, handleTaskClick, handleTaskEdit, handleTaskDeletion, set
       {tasks.map((item) => (
         <Task
           tarefa={item}
+          tasks={tasks}
           handleTaskClick={handleTaskClick}
           handleTaskDeletion={handleTaskDeletion}
           handleTaskEdit={handleTaskEdit}
