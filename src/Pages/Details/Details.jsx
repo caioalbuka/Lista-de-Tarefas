@@ -9,15 +9,19 @@ import setVisible from '../../components/Task';
 import '../../App';
 import HeaderDetails from './HeaderDetails';
 import AddDetails from './AddDetails';
-//import Routes from '../Pages/Routes';
-// import Button from '../components/Button';
+import { emptyTask } from '../../constants/messages';
+import Modal from '../../components/Modal/Modal';
 
 const Details = () => {
   const [tasks, setTasks] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false)
   const { id } = useParams();
   //aqui em cima passa o id
   const handleTaskAddition = (title) => {
-    if (title === '') return alert('Falta colocar uma tarefa.');
+    // aqui preciso retornar um modal quando o título estiver vazio
+    if (title === '') return <Modal />;
+    // if (title === '') return alert(emptyTask);
+
 
     const newTasks = [
       ...tasks,
@@ -53,6 +57,7 @@ const Details = () => {
   //console.log('aqui vem o valor da tasks', tasks);
   return (
     <div className="container">
+      {modalVisible && <Modal text={emptyTask} onClose={() => setModalVisible(false)}/>}
       <div className="details-header">
         <HeaderDetails />
         {/* <Voltar /> */}

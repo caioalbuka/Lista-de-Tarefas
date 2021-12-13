@@ -8,10 +8,13 @@ import setVisible from '../components/Task';
 
 import '../App';
 import Header from '../components/Header';
+import { emptyTask } from '../constants/messages';
+import Modal from '../components/Modal/Modal';
 //import Routes from '../Pages/Routes';
 
 const Home = () => {
   const [tasks, setTasks] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleTaskClick = (taskId) => {
     const newTasks = tasks.map((task) => {
@@ -23,7 +26,7 @@ const Home = () => {
   };
 
   const handleTaskAddition = (title) => {
-    if (title === '') return alert('Falta colocar uma tarefa.');
+    if (title === '') return setModalVisible(true);
 
     const newTasks = [
       ...tasks,
@@ -60,6 +63,14 @@ const Home = () => {
   return (
     <div className="container">
       <Header />
+      {modalVisible && (
+        <Modal
+          text={emptyTask}
+          onClose={() => setModalVisible(false)}
+          secondButtonText={'segundo botão'}
+          onClicksecondButton={() => alert('teste')}
+        />
+      )}
       <AddTask handleTaskAddition={handleTaskAddition} />
       <Tasks
         tasks={tasks}
