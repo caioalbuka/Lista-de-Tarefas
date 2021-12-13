@@ -13,8 +13,10 @@ import Modal from '../components/Modal/Modal';
 //import Routes from '../Pages/Routes';
 
 const Home = () => {
-  const [tasks, setTasks] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [tasks, setTasks] = useState(
+    JSON.parse(localStorage.getItem('tarefas')) ? JSON.parse(localStorage.getItem('tarefas')) : [],
+  );
 
   const handleTaskClick = (taskId) => {
     const newTasks = tasks.map((task) => {
@@ -34,9 +36,10 @@ const Home = () => {
         id: uuidv4(),
         title: title,
         completed: false,
+        details: '',
       },
     ];
-
+    localStorage.setItem('tarefas', JSON.stringify(newTasks));
     setTasks(newTasks);
   };
 
