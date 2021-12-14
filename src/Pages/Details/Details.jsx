@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 
 import Button from '../../components/Button';
 import Voltar from './Voltar';
 import HeaderDetails from './HeaderDetails';
-import AddDetails from './AddDetails';
+// import AddDetails from './AddDetails';
 import { emptyTask } from '../../constants/messages';
-// import Modal from '../../components/Modal/Modal';
-import Modal from '../../components/PopUp';
+import Modal from '../../components/Modal/Modal';
+//import Modal from '../../components/PopUp';
 import './Details.css';
-
 
 // const Details = () => {
 //   const [tasks, setTasks] = useState([]);
@@ -21,7 +20,6 @@ import './Details.css';
 //     if (title === '') return <Modal />;
 //     // if (title === '') return alert(emptyTask);
 
-
 //     const newTasks = [
 //       ...tasks,
 //       {
@@ -31,16 +29,15 @@ import './Details.css';
 //       },
 //     ];
 
-
 const Details = () => {
-  const [showModal, setShowModal] = useState(true);
-  const openModal = () => {
-    setShowModal(true);
-  };
+  const [modalVisible, setModalVisible] = useState(false);
+  //  const openModal = () => {
+  // setShowModal(true);
   const { id } = useParams();
   const {
     state: { tarefa },
   } = useLocation();
+  const navigation = useNavigate();
 
   //const[Var de estado, funçao que altera a variavel de estao] = useState-hook de estado ([])
 
@@ -54,6 +51,7 @@ const Details = () => {
     setText(e.target.value);
   };
   const handleClickSave = () => {
+    setModalVisible(true);
     const tasks = JSON.parse(localStorage.getItem('tarefas'));
     const newTarefa = {
       id: id,
@@ -70,15 +68,21 @@ const Details = () => {
     });
     localStorage.setItem('tarefas', JSON.stringify(newTasks));
     // return alert(PopUp());
-
-    return alert('SALVO');
-    //procurar nessa lista de array, procurar o id e substituir pelo newTarefa
   };
   return (
     <div className="container">
-      {/* {modalVisible && <Modal text={emptyTask} onClose={() => setModalVisible(false)}/>} */}
+      {modalVisible && <Modal text={emptyTask} onClose={() => setModalVisible(false)} />}
       <div className="details-header">
         <HeaderDetails />
+        {modalVisible && (
+          <Modal
+            text={emptyTask}
+            onClose={() => setModalVisible(false)}
+            secondButtonText={'Sair'}
+            onClicksecondButton={() => navigation('../')}
+            // onClickAlert={() => alert('Salvo')}
+          />
+        )}
       </div>
       <div className="details-info">
         <div className="title-details-container">
@@ -90,12 +94,11 @@ const Details = () => {
           <div className="button-details-container">
             <Voltar />
             <Button onClick={handleClickSave}>Salvar</Button>
-            <button onClick={openModal}>Open Modal</button>
-            {/* {showModal ? <Modal setShowModal={setShowModal} /> : null} */}
           </div>
         </div>
       </div>
     </div>
   );
 };
+
 export default Details;

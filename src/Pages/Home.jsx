@@ -8,9 +8,9 @@ import setVisible from '../components/Task';
 
 import '../App';
 import Header from '../components/Header';
-import { emptyTask } from '../constants/messages';
+// import { emptyTask } from '../constants/messages';
 import Modal from '../components/Modal/Modal';
-//import Routes from '../Pages/Routes';
+//import Routes from '../pages/Routes';
 
 const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -66,14 +66,15 @@ const Home = () => {
   return (
     <div className="container">
       <Header />
-      {modalVisible && (
+      {modalVisible && <Modal text={'Campo Vazio'} onClose={() => setModalVisible(false)} />}
+      {/* {modalVisible && (
         <Modal
           text={emptyTask}
           onClose={() => setModalVisible(false)}
-          secondButtonText={'segundo botão'}
+          secondButtonText={'Ok'}
           onClicksecondButton={() => alert('teste')}
         />
-      )}
+      )} */}
       <AddTask handleTaskAddition={handleTaskAddition} />
       <Tasks
         tasks={tasks}

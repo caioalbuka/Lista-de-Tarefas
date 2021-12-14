@@ -3,16 +3,23 @@ import Button from '../Button';
 import './Modal.css';
 
 const Modal = ({ text, onClose, secondButtonText, onClicksecondButton }) => {
-  
   return (
     <div className="container-modal" onClick={onClose}>
       <div className="modal">
-        <div className="modal-details">{text}
-        <Button onClick={onClose}>Fechar</Button>
-        {secondButtonText && <Button onClick={onClicksecondButton}>{secondButtonText}</Button>}
+        <div className="modal-details">
+          <div>
+            <h2>{text}</h2>
+            {/* <h3>{detailsSave}</h3> */}
+          </div>
+          <div className="button-detail">
+            <Button onClick={onClose}>Ok</Button>
+            {secondButtonText && <Button onClick={onClicksecondButton}>{secondButtonText}</Button>}
+
+            {/* <Button onClick={onClose}>Voltar</Button>
+            <Button onClick={onClose}>Ok</Button> */}
+          </div>
         </div>
       </div>
-     
     </div>
   );
 };

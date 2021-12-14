@@ -1,2 +1,2 @@
-export const emptyTask = 'Falta colocar uma tarefa.'
+export const emptyTask = 'Alterações Salvas'
 export const invalidLogin = 'Usuário ou senha errado'
