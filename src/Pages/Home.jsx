@@ -8,7 +8,7 @@ import setVisible from '../components/Task';
 
 import '../App';
 import Header from '../components/Header';
-// import { emptyTask } from '../constants/messages';
+import { emptyTask } from '../constants/messages';
 import Modal from '../components/Modal/Modal';
 //import Routes from '../pages/Routes';
 
@@ -44,8 +44,17 @@ const Home = () => {
   };
 
   const handleTaskDeletion = (taskId) => {
+    const tasks = JSON.parse(localStorage.getItem('tarefas'));
     const newTasks = tasks.filter((task) => task.id !== taskId);
+    // const newTasks = tasks.filter((task) => {
+    //   if (task.id !== taskId) {
+    //     return { ...task, task: taskId };
+    //   } else {
+    //     return taskId;
+    //   }
+    // });
 
+    localStorage.setItem('tarefas', JSON.stringify(newTasks));
     setTasks(newTasks);
   };
 
