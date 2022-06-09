@@ -9,7 +9,7 @@
   padding: 0 10px;
   border-radius: 5px;
   border: none;
-  /* flex: 2; */
+
   background-color: #444;
   color: #eee;
   font-size: 16px;
@@ -17,5 +17,4 @@
 
 .add-task-button-container {
   margin-left: 10px;
-  /* flex: 2; */
 }

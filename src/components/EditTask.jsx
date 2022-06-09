@@ -8,8 +8,6 @@ const EditTask = ({ pinico, handleTaskEdit, setVisible }) => {
   console.log('teste aqui', setVisible);
   const [inputData, setInputData] = useState(pinico.title);
 
-  //coloco o visible aqui para esconder o editTask depois de clicar no Edit
-  //const [visible, setVisible] = useState(true);
   const handleInputChange = (e) => {
     setInputData(e.target.value);
   };

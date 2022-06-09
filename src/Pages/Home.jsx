@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-//import { BrowserRouter as Router } from 'react-router-dom';
 
 import Tasks from '../components/Tasks';
 import AddTask from '../components/AddTask';
@@ -10,7 +9,6 @@ import '../App';
 import Header from '../components/Header';
 import { emptyTask } from '../constants/messages';
 import Modal from '../components/Modal/Modal';
-//import Routes from '../pages/Routes';
 
 const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -46,13 +44,6 @@ const Home = () => {
   const handleTaskDeletion = (taskId) => {
     const tasks = JSON.parse(localStorage.getItem('tarefas'));
     const newTasks = tasks.filter((task) => task.id !== taskId);
-    // const newTasks = tasks.filter((task) => {
-    //   if (task.id !== taskId) {
-    //     return { ...task, task: taskId };
-    //   } else {
-    //     return taskId;
-    //   }
-    // });
 
     localStorage.setItem('tarefas', JSON.stringify(newTasks));
     setTasks(newTasks);
@@ -68,22 +59,15 @@ const Home = () => {
         return item;
       }
     });
-    //console.log('newTasks', newTasks);
+
     setTasks(newTasks);
   };
-  //console.log('aqui vem o valor da tasks', tasks);
+
   return (
     <div className="container">
       <Header />
       {modalVisible && <Modal text={'Campo Vazio'} onClose={() => setModalVisible(false)} />}
-      {/* {modalVisible && (
-        <Modal
-          text={emptyTask}
-          onClose={() => setModalVisible(false)}
-          secondButtonText={'Ok'}
-          onClicksecondButton={() => alert('teste')}
-        />
-      )} */}
+
       <AddTask handleTaskAddition={handleTaskAddition} />
       <Tasks
         tasks={tasks}
